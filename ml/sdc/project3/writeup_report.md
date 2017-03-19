@@ -27,12 +27,12 @@ The goals / steps of this project are the following:
 [image12]: ./output_images/loss_of_test_dataset.png
 
 ## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.
 
 ---
-###Files Submitted & Code Quality
+### Files Submitted & Code Quality
 
-####1. Submission includes all required files and can be used to run the simulator in autonomous mode
+#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
 The project includes the following files:
 
@@ -53,14 +53,14 @@ The project includes the following files:
 * `tools/data_provider.py` tools for providing data
 * `tools/network.py` neural network definition
 
-####2. Submssion includes functional code
+#### 2. Submssion includes functional code
 
 Using the Udacity provided simulator and `drive.py` file, the car can be driven autonomously around the track by executing
 ```sh
 python drive.py model.h5
 ```
 
-####3. Submssion code is usable and readable
+#### 3. Submssion code is usable and readable
 
 The `model.py` file contains the code for training and saving the convolution neural network. The file shows the pipeline that was used for training and validating the model. It uses the following python classes:
 
@@ -69,31 +69,31 @@ The `model.py` file contains the code for training and saving the convolution ne
 * `tools/data_preprocessor.py` which resizes and crops the images
 * `tools/network.py` which contains convolutional neural network definition
 
-###Model Architecture and Training Strategy
+### Model Architecture and Training Strategy
 
-####1. An appropriate model architecture has been employed
+#### 1. An appropriate model architecture has been employed
 
 Regression model was used. It is made of a convolution neural network with 5x5 and 3x3 filter sizes and depths between 24 and 64 (`tools/network.py` lines 12-37). The model also includes fully connected layers with RELU activations to introduce non-linearity ('tools/network.py' lines 39-59).
 
-####2. Attempts to reduce overfitting in the model
+#### 2. Attempts to reduce overfitting in the model
 
 The model contains dropout layers (30%) in every layer in order to reduce overfitting ('tools/network.py' lines 12 and 59). L2 weights regularization (0.001) was also used in largest fully connected layer ('tools/network.py' line 41) .
 
 Training, validation and test data sets were used while training the model to ensure that the model was not overfitting.(`model.py` lines 21-22, lines 27-34).
 
-####3. Model parameter tuning
+#### 3. Model parameter tuning
 
 The model used an adam optimizer, so the learning rate was not tuned manually (`model.py` line 20).
 
-####4. Appropriate training data
+#### 4. Appropriate training data
 
 Training data was chosen to keep the vehicle driving on the road. The combination of center lane driving and recovering from the left and right sides of the road on both tracks was used.
 
 For details about how I created the training data, see the next section. 
 
-###Model Architecture and Training Strategy
+### Model Architecture and Training Strategy
 
-####1. Solution Design Approach
+#### 1. Solution Design Approach
 
 The overall strategy for deriving a model architecture was to compare the project to traffic sign classification project where convolutional neural network was used. Similar kind of network was used for this project, but output of the model was modified in order to make it a regression model. I was also inspired by the paper [End to End Learning for Self-Driving Cars](https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).
 
@@ -108,7 +108,7 @@ The final test was to run the simulator to see how well the car was driving arou
 
 At the end of the process the vehicle is able to drive autonomously around the track without leaving the road.
 
-####2. Final Model Architecture
+#### 2. Final Model Architecture
 
 The final model architecture (`network.py`, `create_convolutional_nvidia_style_modified()`) consisted of a convolution neural network with the following layers and layer sizes:
 
@@ -126,7 +126,7 @@ The final model architecture (`network.py`, `create_convolutional_nvidia_style_m
 * layer 9: fully connected: output  10 x 1; dropout 30%;
 * output: fully connected: output    1 x 1;
 
-####3. Creation of the Training Set & Training Process
+#### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, three laps of center lane driving were recorded on each track.
 
@@ -206,11 +206,11 @@ Each batch contained 2.000 random data points from which data generator created 
 
 During the training loss on training and validation dataset was monitored in order to insure that it was decreasing for both sets of data. EPOCS parameter was accordingly adjusted in order to prevent overfitting. Figure below shows loss on training and validation data set:
 
-![alt text][image10]
+![alt text][image11]
 
 And loss of test data set:
 
-![alt text][image10]
+![alt text][image12]
 
 Models were saved and evaluated with driving simulator on every 3 batches.
 
