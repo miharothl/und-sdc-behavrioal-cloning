@@ -64,9 +64,9 @@ python drive.py model.h5
 
 The `model.py` file contains the code for training and saving the convolution neural network. The file shows the pipeline that was used for training and validating the model. It uses the following python classes:
 
-* `tools/data_provider.py` which provides the training and test data from data sets defined in parameters.py
+* `tools/data_provider.py` which provides the training and test data from data sets
 * `tools/data_generator.py` which generates additional data by adjusting image brightness, flips the images, creates image transformation and applies strips of different shadows to the the image
-* `tools/data_preprocessor.py` which resizes and crops the images
+* `tools/data_preprocessor.py` which re-sizes and crops the images
 * `tools/network.py` which contains convolutional neural network definition
 
 ### Model Architecture and Training Strategy
@@ -95,14 +95,14 @@ For details about how I created the training data, see the next section.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to compare the project to traffic sign classification project where convolutional neural network was used. Similar kind of network was used for this project, but output of the model was modified in order to make it a regression model. I was also inspired by the paper [End to End Learning for Self-Driving Cars](https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).
+The overall strategy for deriving a model architecture was to compare the project to traffic sign classification project where convolutional neural network was used. Similar kind of network was used for this project, but output of the model was modified in order to make it a regression model. I was also inspired by [End to End Learning for Self-Driving Cars](https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).
 
-During the training loss of training, validation and test data set was monitored. The training  parameters were modified to ensure that loss of both training and validation set was dropping. In order to prevent overfitting:
+Loss of training, validation and test data set was monitored during the training. The parameters were modified to ensure that loss of both training and validation dataset was dropping. In order to prevent overfitting:
 
 * model complexity was reduced (i.e. NVidia's largest fully connected layer was reduced from 1164 to 300)
 * dropout layers were introduced (0.3) in all layers of the model
-* L2 wight regularization was used (0.001) in one largest fully connected layer
-* 5-9 EPOCS were used during the training
+* L2 wight regularization was used (0.001) in the largest fully connected layer
+* short training, only 5-9 EPOCS were used
 
 The final test was to run the simulator to see how well the car was driving around both tracks. There were a few spots where the vehicle fell off the track (i.e. bridge, off-road section, tight curves on advanced track). To improve the driving behavior in these cases, aditional lane and recovery driving data was recorded in those sections of the road and used to train the model.
 
@@ -115,8 +115,8 @@ The final model architecture (`network.py`, `create_convolutional_nvidia_style_m
 * input: 160 x 320 x 3
 * lambda: output 160 x 320 x 3;
 * cropping: output 65 x 320 x 3
-* layer 1: convolutional; kernel 5 x 5; stride 2 x 4; output 33 x 80 x 24; dropout 30%;
-* layer 2: convolutional; kernel 5 x 6; stride 2 x 2; output 17 x 40 x 36; dropout 30%;
+* layer 1: convolutional; kernel 5 x 6; stride 2 x 4; output 33 x 80 x 24; dropout 30%;
+* layer 2: convolutional; kernel 5 x 5; stride 2 x 2; output 17 x 40 x 36; dropout 30%;
 * layer 3: convolutional; kernel 5 x 5; stride 2 x 2; output  9 x 20 x 48; dropout 30%;
 * layer 4: convolutional; kernel 3 x 3; stride 1 x 1; output  9 x 20 x 64; dropout 30%;
 * layer 5: convolutional; kernel 3 x 3; stride 1 x 1; output  9 x 20 x 64; dropout 30%;
@@ -128,7 +128,7 @@ The final model architecture (`network.py`, `create_convolutional_nvidia_style_m
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, three laps of center lane driving were recorded on each track.
+To capture good driving behavior, three laps of center lane driving were recorded on each track. Two laps of recovery driving on both tracks were added.
 
 Training data was divided into 49 sections:
 
@@ -136,17 +136,17 @@ Training data was divided into 49 sections:
 * [0] for straight driving
 * [1] to [24] for right steering angles
 
-In order to ensure uniform distribution the following following filters were applied for lane driving `parameters.py` (lines: 37 to 56)
+In order to ensure uniform distribution filters were applied for lane driving `parameters.py` (lines: 37 to 56)
 
-* [-1] random 60%
-* [0] random 10%
+* [-1] random 60%,
+* [0] random 10%,
 * [1] random 60%
 
-And the following for recovery driving:
+And the following filters for recovery driving:
 
-* from section [-5] to [5] random 10% of data was used
+* from section [-5] to [5] random 10% of data was used.
 
-Figure below shows example of manipulated data  distribution for lane driving on track one.
+Figure below shows example of manipulated data distribution for lane driving on track one.
 
 ![alt text][image1]
 
@@ -169,8 +169,8 @@ And recovery examples from the left back to center...
 In order to generate more data points the following data augmentation techniques were used (`tools/data_generation.py`):
 
 * center and both left and right camera images were used and steering angle updated
-* random brightness to the image
-* random flip of the image and steering angles updated to make data set symmetrical
+* random brightness of the image
+* random flip of the image and steering angles updated to make dataset symmetrical
 * random horizontal translation of the image and steering angles updated
 * random vertical translation of the image to improve driving in hilly conditions
 * random stripes of shadows to improve behaviour where shadows are casted
@@ -195,7 +195,7 @@ And example of random stripes:
 
 ![alt text][image10]
 
-Data generation process created 5 times more data points. Data was then preprocessed (`tools/data_preprocessor.py`) by cropping the original image size of 160x320 to 48x160.
+Data generation process created 5 times more data points.
 
 The data was randomly shuffled and split into:
 
@@ -204,11 +204,11 @@ The data was randomly shuffled and split into:
 
 Each batch contained 2.000 random data points from which data generator created additional 10.000 data points.
 
-During the training loss on training and validation dataset was monitored in order to insure that it was decreasing for both sets of data. EPOCS parameter was accordingly adjusted in order to prevent overfitting. Figure below shows loss on training and validation data set:
+During the training loss on training and validation dataset was monitored in order to insure that it was decreasing for both sets of data. EPOCS parameter was accordingly adjusted in order to prevent overfitting. Figure below shows loss of training and validation dataset:
 
 ![alt text][image11]
 
-And loss of test data set:
+And loss of test dataset:
 
 ![alt text][image12]
 
@@ -218,6 +218,7 @@ Example of autonomous driving on [track one](./video.mp4) ond [track two](./vide
 
 ### Discussion
 
-The best project by far on CarND so far. Spent over $150 on AWS. It might be time to get that NVidia Titan GPU ;-)
+The best project by far on CarND so far. Spent over $200 on AWS. It might be time to get that NVidia Titan GPU ;-)
 
-Two different approaches were used for the two models that I trained for this project. For the first model classification model was used and the second one regression. Both of them were able to drive around both tracks however the latest regression model achieves performs better. It achieves faster speeds as its much more fine tuned. This is clearly seen in straight lane driving were  much faster speeds and is a better fit for this problem.
+Two different approaches were used for the two models that I trained for this project. For the first model classification model was used and for the second one regression. Both of them were able to drive the vehicle around both tracks however the latest regression model performs better. It achieves faster speeds as its more fine tuned and vehicle doesn't oscillate as much.
+
