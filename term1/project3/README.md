@@ -13,14 +13,21 @@
 [image12]: ./output_images/loss_of_test_dataset.png
 
 [imagea]: ./video.gif
+[imageb]: ./video_track2.gif
 
 **Behavioral Cloning**
 
 ---
 
-![alt text][imagea]
-![alt text][imageb]
+## TLDR
 
+train on track 1
+
+![alt text][imagea]
+
+drive on track 2
+
+![alt text][imageb]
 
 **Behavrioal Cloning Project**
 
