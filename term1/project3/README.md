@@ -15,21 +15,9 @@
 [imagea]: ./video.gif
 [imageb]: ./video_track2.gif
 
-**Behavioral Cloning**
+# Behavioral Cloning
 
----
-
-## TLDR
-
-train on track 1
-
-![alt text][imagea]
-
-drive on track 2
-
-![alt text][imageb]
-
-**Behavrioal Cloning Project**
+## Goals
 
 The goals / steps of this project are the following:
 
@@ -39,6 +27,17 @@ The goals / steps of this project are the following:
 * Test that the model successfully drives around track one without leaving the road
 * Summarize the results with a written report
 
+## TLDR
+
+Train and test deep neural network to drive around the training track without leaving the road.
+
+![alt text][imagea]
+
+The appropriately trained model should generalize and successfully drive around any track.
+
+![alt text][imageb]
+
+---
 
 ## Rubric Points
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.
